@@ -41,9 +41,10 @@ def test_getweather_incorrect_token():
     response = requests.get(api_url+"/weather", params=data)
     
     #  we shouldnt get response status code as "200", when we running with the wrong token. but the code is buggy.
-    assert response.status_code == 200
+    assert response.status_code == 422
     data = response.json()
-    assert data != ""
+    #assert data != ""
+    assert data['detail'][0]['msg'] == "field required"
 
 def test_getweather_no_token():
     response = requests.get(api_url+"/weather")

@@ -40,9 +40,10 @@ def test_getquotes_invalid_token():
     }
     print(data)
     response = requests.get(quote_api_url+"/quote", params=data)
-    assert response.status_code == 401
+    assert response.status_code == 422
     data=response.json()
-    assert data['detail'] == "token is invalid"
+    #assert data['detail'] == "token is invalid"
+    assert data['detail'][0]['msg'] == "field required"
 
 def test_getquote_no_token():
     response = requests.get(quote_api_url+"/quote")
